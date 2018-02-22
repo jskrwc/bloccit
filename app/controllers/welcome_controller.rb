@@ -4,5 +4,9 @@ class WelcomeController < ApplicationController
 
   def about
   end
+
+  # Assignment 12
+  def faq
+  end
+
 end
- 
