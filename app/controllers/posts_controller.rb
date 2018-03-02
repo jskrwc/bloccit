@@ -1,7 +1,13 @@
 class PostsController < ApplicationController
   def index
-
     @posts = Post.all
+
+    # assignment 17
+    @posts.each_with_index do |post, index|
+      if index % 5 == 0
+        post.title = 'Spam'
+      end
+    end
   end
 
   def show
