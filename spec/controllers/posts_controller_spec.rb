@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe PostsController, type: :controller do
 
-  let(:my_post) { Post.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph) }
+ let(:my_post) { Post.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph) }
 
   describe "GET #index" do
     it "returns http success" do
