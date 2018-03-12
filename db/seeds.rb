@@ -17,6 +17,16 @@ require 'random_data'
      body:   RandomData.random_paragraph
    )
  end
+
+ # Assignment 16
+ puts "#{Post.count}"
+ Post.find_or_create_by(
+   title:  'This is a unique sample post.',
+   body:   'This is a unique body.'
+ )
+ puts "#{Post.count}"
+
+
  posts = Post.all
 
  # Create Comments
@@ -28,15 +38,7 @@ require 'random_data'
    )
  end
 
- # Assignment 16
- puts "#{Post.count}"
- Post.find_or_create_by(
-   title:  'My first unique sample post.',
-   body:   'My first unique comment on this post.'
- )
- puts "#{Post.count}"
-
-
+ Comment.find_or_create_by!(body: "This is a unique comment", post: Post.first)
 
  puts "Seed finished"
  puts "#{Post.count} posts created"
