@@ -42,4 +42,4 @@ require 'random_data'
  puts "Seed finished"
  puts "#{Post.count} posts created"
  puts "#{Comment.count} comments created"
- puts "#{{Advertisement.count} advertisements created"
+ puts "#{Advertisement.count} advertisements created"
