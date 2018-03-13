@@ -20,7 +20,7 @@ require 'random_data'
 
  # Assignment 16
  puts "#{Post.count}"
- Post.find_or_create_by(
+ unique_post = Post.find_or_create_by(
    title:  'This is a unique sample post.',
    body:   'This is a unique body.'
  )
@@ -38,7 +38,7 @@ require 'random_data'
    )
  end
 
- Comment.find_or_create_by!(body: "This is a unique comment", post: Post.first)
+ Comment.find_or_create_by!(body: "This is a unique comment", post: unique_post)
 
  puts "Seed finished"
  puts "#{Post.count} posts created"
