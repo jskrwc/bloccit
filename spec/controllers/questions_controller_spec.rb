@@ -7,7 +7,7 @@ RSpec.describe QuestionsController, type: :controller do
     Question.create(
       id: 1,
       title: RandomData.random_sentence,
-      body: RandomData.random_paragraph
+      body: RandomData.random_paragraph,
       resolved: false
     )
   end
@@ -27,17 +27,17 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe "GET #show" do
     it "returns http success" do
-      get :show { id: my_question.id }
+      get :show, params: { id: my_question.id }
       expect(response).to have_http_status(:success)
     end
 
     it "renders the #show view" do
-      get :show, { id: my_question.id }
+      get :show, params: { id: my_question.id }
       expect(response).to render_template :show
     end
 
     it "assigns my_question to @question" do
-      get :show, { id: my_question.id }
+      get :show, params: { id: my_question.id }
       expect(assigns(:question)).to eq(my_question)
     end
   end
@@ -61,21 +61,21 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-# ***Compare to vid solution...diff
+# ***  "post" = not the object, but the request method (like get, delete, put, post, patch)
 
   describe "QUESTION create" do
   # when create invoked, new object is persisted to the database
     it "increases the number of Question by 1" do
-      expect{ question :create, { question: { title: RandomData.random_sentence, body: RandomData.random_paragraph, resolved: false } } }.to change(Question,:count).by(1)
+      expect{ post :create, params: { question: { title: RandomData.random_sentence, body: RandomData.random_paragraph, resolved: false } } }.to change(Question,:count).by(1)
     end
 
     it "assigns the new post to @question" do
-      question :create, { question: { title: RandomData.random_sentence, body: RandomData.random_paragraph } }
+      post :create, params: { question: { title: RandomData.random_sentence, body: RandomData.random_paragraph } }
       expect(assigns(:question)).to eq Question.last
     end
 
     it "redirects to the new question" do
-      question :create, { question: { title: RandomData.random_sentence, body: RandomData.random_paragraph } }
+      post :create, params: { question: { title: RandomData.random_sentence, body: RandomData.random_paragraph } }
       expect(response).to redirect_to Question.last
     end
   end
@@ -83,12 +83,12 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe "GET #edit" do
     it "returns http success" do
-      get :edit, { id: my_question.id }
+      get :edit, params: { id: my_question.id }
       expect(response).to have_http_status(:success)
     end
 
     it "renders the #edit view" do
-      get :edit, { id: my_question.id }
+      get :edit, params: { id: my_question.id }
  # expect edit view to render when edit a question
       expect(response).to render_template :edit
     end
@@ -100,7 +100,7 @@ RSpec.describe QuestionsController, type: :controller do
       new_title = RandomData.random_sentence
       new_body = RandomData.random_paragraph
 
-      put :update, id: my_question.id, question: {title: new_title, body: new_body, resolved: false }
+      put :update, params: { id: my_question.id, question: {title: new_title, body: new_body, resolved: false } }
 
  # test that @question was updated with title and body passed to update, and @post's id was not changed
       updated_question = assigns(:question)
@@ -113,14 +113,14 @@ RSpec.describe QuestionsController, type: :controller do
       new_title = RandomData.random_sentence
       new_body = RandomData.random_paragraph
  #
-      put :update, id: my_question.id, question: {title: new_title, body: new_body, resolved: true }
+      put :update, params: { id: my_question.id, question: {title: new_title, body: new_body, resolved: true } }
       expect(response).to redirect_to my_question
     end
   end
 
   describe "DELETE destroy" do
     it "deletes the question" do
-      delete :destroy, { id: my_question.id }
+      delete :destroy, params: { id: my_question.id }
  # search db for a post with id = my_post_id...returns array
  # assign size of array to count, then expect count to =0  (i.e. no matchin post after destroy called)
       count = Question.where({id: my_question.id}).size
@@ -128,7 +128,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     it "redirects to questions index" do
-      delete :destroy, { id: my_question.id }
+      delete :destroy, params: { id: my_question.id }
       expect(response).to redirect_to questions_path
     end
   end
