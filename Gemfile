@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
  ruby '2.4.1'
- 
+
  git_source(:github) do |repo_name|
    repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
    "https://github.com/#{repo_name}.git"
@@ -46,6 +46,7 @@ source 'https://rubygems.org'
  group :development, :test do
    gem 'rspec-rails', '~> 3.0'
    gem 'rails-controller-testing'
+   gem 'shoulda'
  end
 
  gem 'bootstrap-sass'

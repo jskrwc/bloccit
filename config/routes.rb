@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
-  # get 'posts/index'
-  # get 'posts/show'
-  # get 'posts/new'
-  # get 'posts/edit'
 
-  resources :posts
+
+  # resources :topics
+  # resources :posts
+
+  resources :topics do
+    # nests post routes under the topics routes
+    resources :posts, except: [:index]
+  end
 
   # get 'welcome/index'
   # get 'welcome/about'
