@@ -24,4 +24,8 @@ module RandomData
     letters.shuffle!           # use ! to shuffle in place
     letters[0,rand(3..8)].join
   end
+
+  def self.random_int
+    rand(1..100)
+  end
 end

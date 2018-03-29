@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe Comment, type: :model do
   # let(:post) { Post.create!(title: "New Post Title", body: "New Post Body") }
   let(:topic) { Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph) }
-    let(:post) { topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph) }
+  let(:post) { topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph) }
+  let(:sponsored_post) { topic.sponsored_posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, price: 100) }
   let(:comment) { Comment.create!(body: 'Comment Body', post: post) }
 
   describe "attributes" do

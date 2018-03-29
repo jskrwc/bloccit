@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  # 
+  # get 'sponsored_posts/show'
+  #
+  # get 'sponsored_posts/new'
+  #
+  # get 'sponsored_posts/edit'
 
   # resources :topics
   # resources :posts
@@ -7,6 +13,7 @@ Rails.application.routes.draw do
   resources :topics do
     # nests post routes under the topics routes
     resources :posts, except: [:index]
+    resources :sponsored_posts, except: [:index]
   end
 
   # get 'welcome/index'
