@@ -6,6 +6,13 @@ RSpec.describe User, type: :model do
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_length_of(:name).is_at_least(1) }
 
+  # Assignment 23
+  it "should format user name" do
+    user.name = "joe meatball"
+    user.save
+    expect(user.name).to eq "Joe Meatball"
+  end
+
   # Shoulda tests for email
   it { is_expected.to validate_presence_of(:email) }
   it { is_expected.to validate_uniqueness_of(:email) }
