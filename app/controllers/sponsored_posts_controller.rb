@@ -11,18 +11,19 @@ class SponsoredPostsController < ApplicationController
   end
 
   def edit
-    @topic = Topic.find(params[:id])
+    # @topic = Topic.find(params[:id])
+    @sponsored_post = SponsoredPost.find(params[:id])
   end
 
   def create
+    @topic = Topic.find(params[:topic_id])
     # call Post.new to create new instance of Post
     @sponsored_post = SponsoredPost.new
     @sponsored_post.title = params[:sponsored_post][:title]
     @sponsored_post.body = params[:sponsored_post][:body]
     @sponsored_post.price = params[:sponsored_post][:price]
-    @sponsored_post.topic = Topic.find(params[:topic_id])
 
-    @post.topic = @topic
+    @sponsored_post.topic = @topic
 
     # if successfully save post to database, display success message
     if @sponsored_post.save
