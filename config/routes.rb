@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   # nb only prevents rails from creating unnecessary routes
   resources :users, only: [:new, :create]
 
+  resources :sessions, only: [:new, :create, :destroy]
+
   # get 'welcome/index'
   # get 'welcome/about'
 
