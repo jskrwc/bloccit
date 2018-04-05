@@ -20,5 +20,21 @@ class UsersController < ApplicationController
     end
   end
 
+  def confirm
+    @user = User.new
+    @user.name = params[:user][:name]
+    @user.email = params[:user][:email]
+    @user.password = params[:user][:password]
+    @user.password_confirmation = params[:user][:password_confirmation]
+  end
+
+  # Rails 5.1.4+ require you to specify the parameters
+  # you want to pass through.
+  def user_params
+    params.require(:user).permit(:email, :password, :password_confirmation)
+  end
+
+# This makes `user_params()` available in the view.
+  helper_method :user_params
 
 end
