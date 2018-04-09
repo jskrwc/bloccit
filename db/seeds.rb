@@ -50,10 +50,25 @@ require 'random_data'
    )
  end
 
-# add me as user for test purposes
-user = User.first
-user.update_attributes!(
-  email: 'jim@knopf.io',
+# # add me as user for test purposes
+# user = User.first
+# user.update_attributes!(
+#   email: 'jim@knopf.io',
+#   password: 'helloworld'
+# )
+
+# Create and admin user
+admin = User.create!(
+  name: 'Admin User',
+  email:  'admin@example.com',
+  password: 'helloworld',
+  role: 'admin'
+)
+
+# Create a member
+member = User.create!(
+  name: 'Member User',
+  email: 'member@example.com',
   password: 'helloworld'
 )
 

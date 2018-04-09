@@ -4,6 +4,7 @@ class User < ApplicationRecord
   # nb --  registers inline callback directly after before_save callback
   before_save { self.email = email.downcase if email.present? }
 
+  before_save { self.role ||= :member }
 
 
   validates :name, length: { minimum: 1, maximum: 100 }, presence: true
@@ -18,4 +19,6 @@ class User < ApplicationRecord
 
 # nb - need install BCrypt to use has_secure_password method
   has_secure_password
+
+  enum role: [:member, :admin]
 end
