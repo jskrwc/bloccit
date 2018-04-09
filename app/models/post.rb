@@ -9,11 +9,6 @@ class Post < ApplicationRecord
 
   scope :ordered_by_reverse_created_at, -> { order ('created_at ASC') }
 
-
-  def ordered_by_reverse_created_at
-    order('created_at ASC')
-  end
-
   validates :title, length: { minimum: 5 }, presence: true
   validates :body, length: { minimum: 20 }, presence: true
   validates :topic, presence: true
