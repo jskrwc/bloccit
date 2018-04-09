@@ -9,6 +9,16 @@
 
 require 'random_data'
 
+  # Create Users
+  5.times do
+    User.create!(
+      name:     RandomData.random_name,
+      email:    RandomData.random_email,
+      password: RandomData.random_sentence
+    )
+  end
+  users = User.all
+
   # Create Topics
   15.times do
     Topic.create!(
@@ -23,9 +33,10 @@ require 'random_data'
  50.times do
  # create with bang -- ! raises error if problem w/ data we're seeding
    Post.create!(
+     user:  users.sample,
      topic: topics.sample,
-     title:  RandomData.random_sentence,
-     body:   RandomData.random_paragraph
+     title: RandomData.random_sentence,
+     body:  RandomData.random_paragraph
    )
  end
  posts = Post.all
@@ -39,7 +50,15 @@ require 'random_data'
    )
  end
 
+# add me as user for test purposes
+user = User.first
+user.update_attributes!(
+  email: 'jim@knopf.io',
+  password: 'helloworld'
+)
+
  puts "Seed finished"
+ puts "#{User.count} users created"
  puts "#{Topic.count} topics created"
  puts "#{Post.count} posts created"
  puts "#{Comment.count} comments created"
