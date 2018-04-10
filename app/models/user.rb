@@ -20,5 +20,5 @@ class User < ApplicationRecord
 # nb - need install BCrypt to use has_secure_password method
   has_secure_password
 
-  enum role: [:member, :admin]
+  enum role: [:member, :admin, :moderator]
 end
