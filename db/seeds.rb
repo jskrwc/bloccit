@@ -45,6 +45,7 @@ require 'random_data'
  100.times do
    Comment.create!(
  # call sample on array returned by Post.all,  pick random element
+     user: users.sample,
      post: posts.sample,
      body: RandomData.random_paragraph
    )
