@@ -3,7 +3,7 @@ class TopicsController < ApplicationController
   before_action :require_sign_in, except: [:index, :show]
   # before_action :authorize_user, except: [:index, :show]
   before_action :authorize_user, except: [:index, :show]   # admin or moderator level to CUD topics
-  before_action :authorize_admin, only: [:create, :destroy]  #only admin can create/destroy topics
+  before_action :authorize_admin, only: [:create, :destroy, :new]  #only admin can create/destroy topics
 
   def index
     @topics = Topic.all

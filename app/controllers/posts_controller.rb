@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
 
   before_action :require_sign_in, except: :show
-  before_action :authorize_user, except: [:show]    #own poster, or admin/moderator level to CUD posts
+  before_action :authorize_user, except: [:new, :create, :show]    #own poster, or admin/moderator level to CUD posts
   before_action :authorize_admin, only: [:destroy]  #only own poster, or admin can destroy posts
 
 
