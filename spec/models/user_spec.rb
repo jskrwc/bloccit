@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "password") }
+  # let(:user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "password") }
+  let(:user) { create(:user) }
 
   it { is_expected.to have_many(:posts) }
   it { is_expected.to have_many(:comments) }
@@ -25,7 +26,7 @@ RSpec.describe User, type: :model do
 
   describe "attributes" do
     it "should have name and email attributes" do
-      expect(user).to have_attributes(name: "Bloccit User", email: "user@bloccit.com")
+      expect(user).to have_attributes(name: user.name, email: user.email)
     end
 
 # Checkpoint 27 - authorization
@@ -75,8 +76,11 @@ RSpec.describe User, type: :model do
 
 
   describe "invalid user" do
-    let(:user_with_invalid_name) { User.new(name: "", email: "user@bloccit.com") }
-    let(:user_with_invalid_email) { User.new(name: "Bloccit User", email: "") }
+    # let(:user_with_invalid_name) { User.new(name: "", email: "user@bloccit.com") }
+    # let(:user_with_invalid_email) { User.new(name: "Bloccit User", email: "") }
+    let(:user_with_invalid_name) { build(:user, name: "") }
+    let(:user_with_invalid_email) { build(:user, email: "") }
+
 
     it "should be an invalid user due to blank name" do
       expect(user_with_invalid_name).to_not be_valid
@@ -104,5 +108,14 @@ RSpec.describe User, type: :model do
       end
     end
 
+  describe ".avatar_url" do
+    let(:known_user) { create(:user, email: "blochead@bloc.io") }
 
+    it "returns the proper Gravatar url for a known email entity" do
+# set expected string Gravatar should return; size parameter 48x48 pixels
+      expected_gravatar = "http://gravatar.com/avatar/bb6d1172212c180cfbdb7039129d7b03.png?s=48"
+# #8
+      expect(known_user.avatar_url(48)).to eq(expected_gravatar)
+    end
+  end
 end
