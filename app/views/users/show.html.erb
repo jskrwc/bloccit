@@ -21,9 +21,43 @@
    </div>
  </div>
 
- <!-- // using partials -- display users posts and comments -->
- <h2>Posts</h2>
- <%= render @user.posts %>
+<% if user_has_posts_or_comments? %>
 
- <h2>Comments</h2>
- <%= render @user.comments %>
+  <h2>Posts</h2>
+  <% if user_has_posts? %>
+    <%= render @user.posts %>
+  <% else %>
+    <small>
+    <%= "#{@user.name} has not submitted any posts yet." %>
+    </small>
+  <% end %>
+
+  <h2>Comments</h2>
+  <% if user_has_comments?  %>
+    <%= render @user.comments %>
+  <% else %>
+    <small>
+    <%= "#{@user.name} has not submitted any comments yet." %>
+    </small>
+  <% end %>
+
+<% else %>
+  <%= "#{@user.name} has not submitted any posts or comments yet." %>
+<% end %>
+
+<h2>Favorites</h2>
+<% if user_has_favorites? %>
+  <% @user.favorites.each do |favorite| %>
+      <%= image_tag favorite.post.user.avatar_url(36)%>
+      <%= favorite.post.title %>
+      <small>
+        <%= pluralize(favorite.post.votes.count, 'vote')%>
+        <% pluralize(favorite.post.comments.count, 'comment')%>
+        <br><br>
+      </small>
+  <% end %>
+<% else %>
+  <small>
+  <%= "#{@user.name} has not favorited any posts yet." %>
+  </small>
+<% end %>

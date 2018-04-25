@@ -12,7 +12,8 @@ RSpec.describe CommentsController, type: :controller do
   let(:other_user) { create(:user) }
   let(:my_post) { create(:post, topic: my_topic, user: my_user) }
 
-  let(:my_comment) { Comment.create!(body: 'Comment Body', post: my_post, user: my_user) }
+  # let(:my_comment) { Comment.create!(body: 'Comment Body', post: my_post, user: my_user) }
+  let(:my_comment) { create(:comment, post: my_post, user: my_user) }  #
 
 
 
@@ -50,10 +51,13 @@ RSpec.describe CommentsController, type: :controller do
       end
     end
 
+
     describe "DELETE destroy" do
       it "redirects the user to the posts show view" do
-        delete :destroy, params: { post_id: my_post.id, id: my_comment.id }
-        expect(response).to redirect_to([my_topic, my_post])
+        post = my_comment.post # set post to associate w comment
+        delete :destroy, params: { post_id: post.id, id: my_comment.id }
+        # expect(response).to redirect_to([my_topic, my_post])
+        expect(response).to redirect_to([post.topic, post])
       end
     end
   end
@@ -62,7 +66,10 @@ RSpec.describe CommentsController, type: :controller do
 #
   context "member user doing CRUD on a comment they own" do
     before do
-      create_session(my_user)
+      # create_session(my_user)
+      create_session(my_comment.user)
+    #   my_comment.user = my_user   # need associate comment to the current user
+    #   my_comment.save
     end
 
     describe "POST create" do
@@ -78,14 +85,16 @@ RSpec.describe CommentsController, type: :controller do
 
     describe "DELETE destroy" do
       it "deletes the comment" do
-        delete :destroy, params: { post_id: my_post.id, id: my_comment.id }
+        post = my_comment.post
+        delete :destroy, params: { post_id: post.id, id: my_comment.id }
         count = Comment.where({id: my_comment.id}).count
         expect(count).to eq 0
       end
 
       it "redirects to the post show view" do
-        delete :destroy, params: { post_id: my_post.id, id: my_comment.id }
-        expect(response).to redirect_to [my_topic, my_post]
+        post = my_comment.post
+        delete :destroy, params: { post_id: post.id, id: my_comment.id }
+        expect(response).to redirect_to [post.topic, post]
       end
     end
   end
@@ -95,6 +104,8 @@ RSpec.describe CommentsController, type: :controller do
     before do
       other_user.admin!
       create_session(other_user)
+
+      # post = my_comment.post
     end
 
     describe "POST create" do
@@ -105,6 +116,7 @@ RSpec.describe CommentsController, type: :controller do
       it "redirects to the post show view" do
         post :create, params: { post_id: my_post.id, comment: {body: RandomData.random_sentence} }
         expect(response).to redirect_to [my_topic, my_post]
+        # expect(response).to redirect_to [post.topic, post] #!!!!
       end
     end
 
@@ -118,6 +130,7 @@ RSpec.describe CommentsController, type: :controller do
       it "redirects to the post show view" do
         delete :destroy, params: { post_id: my_post.id, id: my_comment.id }
         expect(response).to redirect_to [my_topic, my_post]
+        # expect(response).to redirect_to [post.topic, post]
       end
     end
   end
